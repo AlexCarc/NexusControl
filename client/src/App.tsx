@@ -1,15 +1,41 @@
 import { Sidebar } from "./layouts/Sidebar";
+import { Navbar } from "./components/Navbar";
+import { MetricCard } from "./components/MetricCard";
 
 function App() {
   return (
-    <div className="flex">
+    <div className="flex bg-slate-950 min-h-screen">
+      
       <Sidebar />
 
-      <main className="flex-1 p-10 bg-slate-950 text-white">
-        <h1 className="text-4xl font-bold">
-          Dashboard
-        </h1>
-      </main>
+      <div className="flex-1">
+        
+        <Navbar />
+
+        <main className="p-8">
+          
+          <div className="grid grid-cols-3 gap-6">
+            
+            <MetricCard
+              title="Usuários Ativos"
+              value="1.284"
+            />
+
+            <MetricCard
+              title="Vendas do Mês"
+              value="R$ 48.200"
+            />
+
+            <MetricCard
+              title="Taxa de Conversão"
+              value="18%"
+            />
+
+          </div>
+
+        </main>
+
+      </div>
     </div>
   )
 }
