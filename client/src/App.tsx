@@ -1,6 +1,8 @@
 import { Sidebar } from "./layouts/Sidebar";
 import { Navbar } from "./components/Navbar";
 import { MetricCard } from "./components/MetricCard";
+import { SalesChart } from "./components/SalesChart";
+import { UsersTable } from "./components/UsersTable";
 
 function App() {
   return (
@@ -30,6 +32,14 @@ function App() {
               title="Taxa de Conversão"
               value="18%"
             />
+
+          </div>
+
+          <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 mt-6">
+
+            <SalesChart />
+
+            <UsersTable />
 
           </div>
 
