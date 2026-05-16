@@ -12,9 +12,9 @@ function App() {
         
         <Navbar />
 
-        <main className="p-8">
+        <main className="p-4 md:p-8">
           
-          <div className="grid grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
             
             <MetricCard
               title="Usuários Ativos"

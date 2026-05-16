@@ -1,6 +1,6 @@
 export function Sidebar() {
   return (
-    <aside className="w-64 h-screen bg-slate-900 border-r border-slate-800 p-5">
+    <aside className="w-64 hidden md:block h-screen bg-slate-900 border-r border-slate-800 p-5">
       <h2 className="text-2xl font-bold text-cyan-400">
         Nexus Control
       </h2>
