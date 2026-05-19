@@ -3,6 +3,7 @@ import { Navbar } from "./components/Navbar";
 import { MetricCard } from "./components/MetricCard";
 import { SalesChart } from "./components/SalesChart";
 import { UsersTable } from "./components/UsersTable";
+import { AIInsight } from "./components/AIInsight";
 
 function App() {
   return (
@@ -10,7 +11,7 @@ function App() {
       
       <Sidebar />
 
-      <div className="flex-1">
+      <div className="flex-1 md:ml-64">
         
         <Navbar />
 
@@ -40,6 +41,8 @@ function App() {
             <SalesChart />
 
             <UsersTable />
+
+            <AIInsight />
 
           </div>
 
