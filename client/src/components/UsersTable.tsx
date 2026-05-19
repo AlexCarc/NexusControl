@@ -1,13 +1,56 @@
-import { useState } from "react";
-import { users } from "../utils/mockData";
+import { useEffect, useState } from "react";
+import { api } from "../services/api";
+
+type User = {
+  id: number
+  name: string
+  email: string
+}
 
 export function UsersTable() {
 
+  const [users, setUsers] = useState<User[]>([]);
   const [search, setSearch] = useState("");
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+
+    async function fetchUsers() {
+
+      try {
+
+        const response = await api.get("/users");
+
+        setUsers(response.data);
+
+      } catch (error) {
+
+        console.log(error);
+
+      } finally {
+
+        setLoading(false);
+
+      }
+    }
+
+    fetchUsers();
+
+  }, []);
 
   const filteredUsers = users.filter((user) =>
     user.name.toLowerCase().includes(search.toLowerCase())
   );
+
+  if (loading) {
+    return (
+      <div className="bg-slate-900 p-6 rounded-2xl border border-slate-800">
+        <p className="text-slate-400">
+          Carregando usuários...
+        </p>
+      </div>
+    )
+  }
 
   return (
     <div className="bg-slate-900 p-6 rounded-2xl border border-slate-800">
@@ -34,7 +77,6 @@ export function UsersTable() {
           <tr className="text-left text-slate-400 border-b border-slate-800">
             <th className="pb-3">Nome</th>
             <th className="pb-3">Email</th>
-            <th className="pb-3">Status</th>
           </tr>
         </thead>
 
@@ -55,22 +97,12 @@ export function UsersTable() {
                   {user.email}
                 </td>
 
-                <td className="py-4">
-                  <span className={`px-3 py-1 rounded-full text-sm font-medium ${
-                    user.status === "Ativo"
-                      ? "bg-green-500/20 text-green-400"
-                      : "bg-yellow-500/20 text-yellow-400"
-                  }`}>
-                    {user.status}
-                  </span>
-                </td>
-
               </tr>
             ))
           ) : (
             <tr>
               <td
-                colSpan={3}
+                colSpan={2}
                 className="text-center py-8 text-slate-500"
               >
                 Nenhum usuário encontrado.
