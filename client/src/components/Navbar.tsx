@@ -1,6 +1,9 @@
 import { Menu } from "lucide-react";
+import { useAuth } from "../context/AuthContext";
 
 export function Navbar() {
+  const { logout } = useAuth();
+
   return (
     <header className="w-full h-20 bg-slate-900 border-b border-slate-800 flex items-center justify-between px-4 md:px-8">
 
@@ -28,7 +31,9 @@ export function Navbar() {
           Novo Relatório
         </button>
 
-        <div className="w-10 h-10 rounded-full bg-slate-700"></div>
+        <button
+          onClick={logout} className="w-10 h-10 rounded-full bg-slate-700 hover:bg-red-500 transition">
+        </button>
 
       </div>
 

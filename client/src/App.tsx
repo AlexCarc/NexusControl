@@ -4,8 +4,16 @@ import { MetricCard } from "./components/MetricCard";
 import { SalesChart } from "./components/SalesChart";
 import { UsersTable } from "./components/UsersTable";
 import { AIInsight } from "./components/AIInsight";
+import { useAuth } from "./context/AuthContext";
+import { Login } from "./pages/Login";
 
 function App() {
+  const { user } = useAuth();
+
+  if (!user) {
+    return <Login />
+  }
+
   return (
     <div className="flex bg-slate-950 min-h-screen">
       
