@@ -1,3 +1,5 @@
+import { NavLink } from "react-router-dom";
+
 export function Sidebar() {
   return (
     <aside className="w-64 hidden md:flex flex-col fixed h-screen bg-slate-900 border-r border-slate-800">
@@ -5,21 +7,19 @@ export function Sidebar() {
         Nexus Control
       </h2>
 
-      <nav className="mt-10">
-        <ul className="space-y-4">
-          <li className="text-slate-300 hover:text-cyan-400 cursor-pointer transition">
-            Dashboard
-          </li>
+      <NavLink
+          to="/"
+          className="text-white hover:text-cyan-400 transition"
+        >
+          Dashboard
+      </NavLink>
 
-          <li className="text-slate-300 hover:text-cyan-400 cursor-pointer transition">
-            Usuários
-          </li>
-
-          <li className="text-slate-300 hover:text-cyan-400 cursor-pointer transition">
-            Relatórios
-          </li>
-        </ul>
-      </nav>
+      <NavLink
+          to="/reports"
+          className="text-white hover:text-cyan-400 transition"
+        >
+          Relatórios
+      </NavLink>
     </aside>
   )
 }

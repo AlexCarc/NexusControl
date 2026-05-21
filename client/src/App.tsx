@@ -1,13 +1,23 @@
-import { Sidebar } from "./layouts/Sidebar";
-import { Navbar } from "./components/Navbar";
-import { MetricCard } from "./components/MetricCard";
-import { SalesChart } from "./components/SalesChart";
-import { UsersTable } from "./components/UsersTable";
-import { AIInsight } from "./components/AIInsight";
+import {
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
+
 import { useAuth } from "./context/AuthContext";
+
+import { MainLayout } from "./layouts/MainLayout";
+
+import { Dashboard } from "./pages/Dashboard";
+import { Users } from "./pages/Users";
+import { Reports } from "./pages/Reports";
+
 import { Login } from "./pages/Login";
 
-function App() {
+import { MetricCard } from "./components/MetricCard";
+
+export default function App() {
+
   const { user } = useAuth();
 
   if (!user) {
@@ -15,50 +25,57 @@ function App() {
   }
 
   return (
-    <div className="flex bg-slate-950 min-h-screen">
-      
-      <Sidebar />
+    <MainLayout>
 
-      <div className="flex-1 md:ml-64">
-        
-        <Navbar />
+      <Routes>
 
-        <main className="p-4 md:p-8">
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-            
-            <MetricCard
-              title="Usuários Ativos"
-              value="1.284"
-            />
+        <Route
+          path="/"
+          element={
+            <div>
 
-            <MetricCard
-              title="Vendas do Mês"
-              value="R$ 48.200"
-            />
+              <Dashboard />
 
-            <MetricCard
-              title="Taxa de Conversão"
-              value="18%"
-            />
+              <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 mt-6">
 
-          </div>
+                <MetricCard
+                  title="Usuários Ativos"
+                  value="1.284"
+                />
 
-          <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 mt-6">
+                <MetricCard
+                  title="Vendas do Mês"
+                  value="R$ 48.200"
+                />
 
-            <SalesChart />
+                <MetricCard
+                  title="Taxa de Conversão"
+                  value="18%"
+                />
 
-            <UsersTable />
+              </div>
 
-            <AIInsight />
+            </div>
+          }
+        />
 
-          </div>
+        <Route
+          path="/users"
+          element={<Users />}
+        />
 
-        </main>
+        <Route
+          path="/reports"
+          element={<Reports />}
+        />
 
-      </div>
-    </div>
+        <Route
+          path="*"
+          element={<Navigate to="/" />}
+        />
+
+      </Routes>
+
+    </MainLayout>
   )
 }
-
-export default App
