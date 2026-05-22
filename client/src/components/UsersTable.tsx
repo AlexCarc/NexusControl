@@ -1,42 +1,10 @@
-import { useEffect, useState } from "react";
-import { api } from "../services/api";
-
-type User = {
-  id: number
-  name: string
-  email: string
-}
+import { useState } from "react";
+import { useDashboard } from "../context/DashboardContext";
 
 export function UsersTable() {
 
-  const [users, setUsers] = useState<User[]>([]);
   const [search, setSearch] = useState("");
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-
-    async function fetchUsers() {
-
-      try {
-
-        const response = await api.get("/users");
-
-        setUsers(response.data);
-
-      } catch (error) {
-
-        console.log(error);
-
-      } finally {
-
-        setLoading(false);
-
-      }
-    }
-
-    fetchUsers();
-
-  }, []);
+  const { users, loading } = useDashboard();
 
   const filteredUsers = users.filter((user) =>
     user.name.toLowerCase().includes(search.toLowerCase())
@@ -44,10 +12,12 @@ export function UsersTable() {
 
   if (loading) {
     return (
-      <div className="bg-slate-900 p-6 rounded-2xl border border-slate-800">
-        <p className="text-slate-400">
-          Carregando usuários...
-        </p>
+      <div className="animate-pulse space-y-4">
+
+        <div className="h-10 bg-slate-800 rounded"></div>
+        <div className="h-10 bg-slate-800 rounded"></div>
+        <div className="h-10 bg-slate-800 rounded"></div>
+
       </div>
     )
   }

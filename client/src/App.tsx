@@ -5,26 +5,29 @@ import {
 } from "react-router-dom";
 
 import { useAuth } from "./context/AuthContext";
+import { useDashboard } from "./context/DashboardContext";
 
 import { MainLayout } from "./layouts/MainLayout";
 
 import { Dashboard } from "./pages/Dashboard";
-import { Users } from "./pages/Users";
 import { Reports } from "./pages/Reports";
-
 import { Login } from "./pages/Login";
 
 import { MetricCard } from "./components/MetricCard";
+import { UsersTable } from "./components/UsersTable";
 
 export default function App() {
 
   const { user } = useAuth();
 
+  const { totalUsers } = useDashboard();
+
   if (!user) {
-    return <Login />
+    return <Login />;
   }
 
   return (
+
     <MainLayout>
 
       <Routes>
@@ -40,7 +43,7 @@ export default function App() {
 
                 <MetricCard
                   title="Usuários Ativos"
-                  value="1.284"
+                  value={String(totalUsers)}
                 />
 
                 <MetricCard
@@ -61,7 +64,7 @@ export default function App() {
 
         <Route
           path="/users"
-          element={<Users />}
+          element={<UsersTable />}
         />
 
         <Route

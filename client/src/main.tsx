@@ -1,5 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
+import { DashboardProvider } from './context/DashboardContext'
 
 import {
   BrowserRouter,
@@ -19,8 +20,12 @@ ReactDOM.createRoot(
 
       <AuthProvider>
 
-        <App />
+        <DashboardProvider>
 
+            <App />
+            
+        </DashboardProvider>
+        
       </AuthProvider>
 
     </BrowserRouter>
