@@ -1,10 +1,12 @@
 import { useState } from "react";
 import { useDashboard } from "../context/DashboardContext";
+import { UserModal } from "./UserModal";
 
 export function UsersTable() {
 
   const [search, setSearch] = useState("");
   const { users, loading } = useDashboard();
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const filteredUsers = users.filter((user) =>
     user.name.toLowerCase().includes(search.toLowerCase())
@@ -39,7 +41,22 @@ export function UsersTable() {
           className="bg-slate-800 border border-slate-700 rounded-lg px-4 py-2 text-sm text-white outline-none focus:border-cyan-500"
         />
 
+        {
+          isModalOpen && (
+            <UserModal
+              onClose={() => setIsModalOpen(false)}
+            />
+          )
+        }
+
       </div>
+
+      <button
+          onClick={() => setIsModalOpen(true)}
+          className="bg-cyan-500 hover:bg-cyan-600 transition px-4 py-2 rounded-lg font-bold"
+        >
+          Novo Usuário
+      </button>
 
       <table className="w-full">
 
