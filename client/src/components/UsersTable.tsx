@@ -1,12 +1,19 @@
 import { useState } from "react";
+
 import { useDashboard } from "../context/DashboardContext";
+
 import { UserModal } from "./UserModal";
 
 export function UsersTable() {
 
   const [search, setSearch] = useState("");
-  const { users, loading } = useDashboard();
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const {
+    users,
+    loading,
+    deleteUser,
+  } = useDashboard();
 
   const filteredUsers = users.filter((user) =>
     user.name.toLowerCase().includes(search.toLowerCase())
@@ -17,7 +24,9 @@ export function UsersTable() {
       <div className="animate-pulse space-y-4">
 
         <div className="h-10 bg-slate-800 rounded"></div>
+
         <div className="h-10 bg-slate-800 rounded"></div>
+
         <div className="h-10 bg-slate-800 rounded"></div>
 
       </div>
@@ -41,29 +50,32 @@ export function UsersTable() {
           className="bg-slate-800 border border-slate-700 rounded-lg px-4 py-2 text-sm text-white outline-none focus:border-cyan-500"
         />
 
-        {
-          isModalOpen && (
-            <UserModal
-              onClose={() => setIsModalOpen(false)}
-            />
-          )
-        }
-
       </div>
 
       <button
-          onClick={() => setIsModalOpen(true)}
-          className="bg-cyan-500 hover:bg-cyan-600 transition px-4 py-2 rounded-lg font-bold"
-        >
-          Novo Usuário
+        onClick={() => setIsModalOpen(true)}
+        className="bg-cyan-500 hover:bg-cyan-600 transition px-4 py-2 rounded-lg font-bold mb-6"
+      >
+        Novo Usuário
       </button>
 
       <table className="w-full">
 
         <thead>
           <tr className="text-left text-slate-400 border-b border-slate-800">
-            <th className="pb-3">Nome</th>
-            <th className="pb-3">Email</th>
+
+            <th className="pb-3">
+              Nome
+            </th>
+
+            <th className="pb-3">
+              Email
+            </th>
+
+            <th className="pb-3 text-right">
+              Ações
+            </th>
+
           </tr>
         </thead>
 
@@ -84,22 +96,43 @@ export function UsersTable() {
                   {user.email}
                 </td>
 
+                <td className="py-4 text-right">
+
+                  <button
+                    onClick={() => deleteUser(user.id)}
+                    className="bg-red-500 hover:bg-red-600 transition px-4 py-2 rounded-lg text-sm font-bold"
+                  >
+                    Excluir
+                  </button>
+
+                </td>
+
               </tr>
             ))
           ) : (
             <tr>
+
               <td
-                colSpan={2}
+                colSpan={3}
                 className="text-center py-8 text-slate-500"
               >
                 Nenhum usuário encontrado.
               </td>
+
             </tr>
           )}
 
         </tbody>
 
       </table>
+
+      {
+        isModalOpen && (
+          <UserModal
+            onClose={() => setIsModalOpen(false)}
+          />
+        )
+      }
 
     </div>
   )

@@ -18,7 +18,11 @@ type DashboardContextType = {
   users: User[]
   loading: boolean
   totalUsers: number
-  createUser: (name: string, email: string) => void
+  createUser: (
+    name: string,
+    email: string,
+  ) => void
+  deleteUser: (id: number) => void
 }
 
 const DashboardContext = createContext(
@@ -78,6 +82,15 @@ export function DashboardProvider({
     ]);
   }
 
+  function deleteUser(id: number) {
+
+    setUsers((prevUsers) =>
+      prevUsers.filter(
+        (user) => user.id !== id
+      )
+    );
+  }
+
   return (
     <DashboardContext.Provider
       value={{
@@ -85,6 +98,7 @@ export function DashboardProvider({
         loading,
         totalUsers: users.length,
         createUser,
+        deleteUser,
       }}
     >
       {children}
