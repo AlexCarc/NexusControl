@@ -1,5 +1,7 @@
 import { useState } from "react";
 
+import { useDashboard } from "../context/DashboardContext";
+
 type UserModalProps = {
   onClose: () => void
 }
@@ -11,12 +13,15 @@ export function UserModal({
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
 
+  const { createUser } = useDashboard();
+
   function handleCreateUser() {
 
-    console.log({
-      name,
-      email,
-    });
+    if (!name || !email) {
+      return;
+    }
+
+    createUser(name, email);
 
     onClose();
   }

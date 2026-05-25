@@ -18,6 +18,7 @@ type DashboardContextType = {
   users: User[]
   loading: boolean
   totalUsers: number
+  createUser: (name: string, email: string) => void
 }
 
 const DashboardContext = createContext(
@@ -60,12 +61,30 @@ export function DashboardProvider({
 
   }, []);
 
+  function createUser(
+    name: string,
+    email: string,
+  ) {
+
+    const newUser = {
+      id: Date.now(),
+      name,
+      email,
+    };
+
+    setUsers((prevUsers) => [
+      newUser,
+      ...prevUsers,
+    ]);
+  }
+
   return (
     <DashboardContext.Provider
       value={{
         users,
         loading,
         totalUsers: users.length,
+        createUser,
       }}
     >
       {children}
