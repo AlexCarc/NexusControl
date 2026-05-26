@@ -1,13 +1,19 @@
 import { useState } from "react";
 
+import toast from "react-hot-toast";
+
 import { useDashboard } from "../context/DashboardContext";
 
 import { UserModal } from "./UserModal";
+import { EditUserModal } from "./EditUserModal";
 
 export function UsersTable() {
 
   const [search, setSearch] = useState("");
+
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const [editingUser, setEditingUser] = useState<any>(null);
 
   const {
     users,
@@ -15,8 +21,17 @@ export function UsersTable() {
     deleteUser,
   } = useDashboard();
 
+  function handleDeleteUser(id: number) {
+
+    deleteUser(id);
+
+    toast.success("Usuário removido");
+  }
+
   const filteredUsers = users.filter((user) =>
-    user.name.toLowerCase().includes(search.toLowerCase())
+    user.name.toLowerCase().includes(
+      search.toLowerCase()
+    )
   );
 
   if (loading) {
@@ -46,7 +61,9 @@ export function UsersTable() {
           type="text"
           placeholder="Buscar usuário..."
           value={search}
-          onChange={(e) => setSearch(e.target.value)}
+          onChange={(e) =>
+            setSearch(e.target.value)
+          }
           className="bg-slate-800 border border-slate-700 rounded-lg px-4 py-2 text-sm text-white outline-none focus:border-cyan-500"
         />
 
@@ -62,6 +79,7 @@ export function UsersTable() {
       <table className="w-full">
 
         <thead>
+
           <tr className="text-left text-slate-400 border-b border-slate-800">
 
             <th className="pb-3">
@@ -77,12 +95,15 @@ export function UsersTable() {
             </th>
 
           </tr>
+
         </thead>
 
         <tbody>
 
           {filteredUsers.length > 0 ? (
+
             filteredUsers.map((user) => (
+
               <tr
                 key={user.id}
                 className="border-b border-slate-800 hover:bg-slate-800 transition"
@@ -99,7 +120,14 @@ export function UsersTable() {
                 <td className="py-4 text-right">
 
                   <button
-                    onClick={() => deleteUser(user.id)}
+                    onClick={() => setEditingUser(user)}
+                    className="bg-yellow-500 hover:bg-yellow-600 transition px-4 py-2 rounded-lg text-sm font-bold mr-2"
+                  >
+                    Editar
+                  </button>
+
+                  <button
+                    onClick={() => handleDeleteUser(user.id)}
                     className="bg-red-500 hover:bg-red-600 transition px-4 py-2 rounded-lg text-sm font-bold"
                   >
                     Excluir
@@ -108,8 +136,11 @@ export function UsersTable() {
                 </td>
 
               </tr>
+
             ))
+
           ) : (
+
             <tr>
 
               <td
@@ -120,6 +151,7 @@ export function UsersTable() {
               </td>
 
             </tr>
+
           )}
 
         </tbody>
@@ -129,7 +161,20 @@ export function UsersTable() {
       {
         isModalOpen && (
           <UserModal
-            onClose={() => setIsModalOpen(false)}
+            onClose={() =>
+              setIsModalOpen(false)
+            }
+          />
+        )
+      }
+
+      {
+        editingUser && (
+          <EditUserModal
+            user={editingUser}
+            onClose={() =>
+              setEditingUser(null)
+            }
           />
         )
       }

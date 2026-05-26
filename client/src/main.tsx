@@ -10,6 +10,7 @@ import App from './App'
 import './index.css'
 
 import { AuthProvider } from './context/AuthContext'
+import { Toaster } from "react-hot-toast";
 
 ReactDOM.createRoot(
   document.getElementById('root')!,
@@ -23,6 +24,8 @@ ReactDOM.createRoot(
         <DashboardProvider>
 
             <App />
+
+            <Toaster position="top-right" toastOptions={{style: {background: "#0f172a", color: "#fff", border: "1px solid #1e293b", }, }} />
             
         </DashboardProvider>
         

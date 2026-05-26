@@ -4,28 +4,34 @@ import { useDashboard } from "../context/DashboardContext";
 
 import toast from "react-hot-toast";
 
-type UserModalProps = {
+type EditUserModalProps = {
+  user: {
+    id: number
+    name: string
+    email: string
+  }
   onClose: () => void
 }
 
-export function UserModal({
+export function EditUserModal({
+  user,
   onClose,
-}: UserModalProps) {
+}: EditUserModalProps) {
 
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
+  const [name, setName] = useState(user.name);
+  const [email, setEmail] = useState(user.email);
 
-  const { createUser } = useDashboard();
+  const { updateUser } = useDashboard();
 
-  function handleCreateUser() {
+  function handleUpdateUser() {
 
-    if (!name || !email) {
-      return;
-    }
+    updateUser(
+      user.id,
+      name,
+      email,
+    );
 
-    createUser(name, email);
-
-    toast.success("Usuário criado com sucesso");
+    toast.success("Usuário atualizado");
 
     onClose();
   }
@@ -38,7 +44,7 @@ export function UserModal({
         <div className="flex items-center justify-between mb-6">
 
           <h2 className="text-2xl font-bold text-white">
-            Novo Usuário
+            Editar Usuário
           </h2>
 
           <button
@@ -54,7 +60,6 @@ export function UserModal({
 
           <input
             type="text"
-            placeholder="Nome do usuário"
             value={name}
             onChange={(e) => setName(e.target.value)}
             className="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-3 text-white outline-none focus:border-cyan-500"
@@ -62,17 +67,16 @@ export function UserModal({
 
           <input
             type="email"
-            placeholder="Email do usuário"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             className="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-3 text-white outline-none focus:border-cyan-500"
           />
 
           <button
-            onClick={handleCreateUser}
+            onClick={handleUpdateUser}
             className="w-full bg-cyan-500 hover:bg-cyan-600 transition rounded-lg py-3 font-bold"
           >
-            Criar Usuário
+            Salvar Alterações
           </button>
 
         </div>

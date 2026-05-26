@@ -18,11 +18,19 @@ type DashboardContextType = {
   users: User[]
   loading: boolean
   totalUsers: number
+
   createUser: (
     name: string,
     email: string,
   ) => void
+
   deleteUser: (id: number) => void
+
+  updateUser: (
+    id: number,
+    name: string,
+    email: string,
+  ) => void
 }
 
 const DashboardContext = createContext(
@@ -91,6 +99,28 @@ export function DashboardProvider({
     );
   }
 
+  function updateUser(
+    id: number,
+    name: string,
+    email: string,
+  ) {
+
+    setUsers((prevUsers) =>
+      prevUsers.map((user) => {
+
+        if (user.id === id) {
+          return {
+            ...user,
+            name,
+            email,
+          };
+        }
+
+        return user;
+      })
+    );
+  }
+
   return (
     <DashboardContext.Provider
       value={{
@@ -99,6 +129,7 @@ export function DashboardProvider({
         totalUsers: users.length,
         createUser,
         deleteUser,
+        updateUser,
       }}
     >
       {children}
