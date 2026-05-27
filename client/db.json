@@ -1,0 +1,15 @@
+{
+  "users": [
+    {
+      "id": "1",
+      "name": "Alex Carvalho",
+      "email": "alexcarvalhoacoficial00@gmail.com.com"
+    },
+    {
+      "name": "Malu Lopes",
+      "email": "malu@email.com",
+      "id": "ATMKZ9EkNM4"
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
+}

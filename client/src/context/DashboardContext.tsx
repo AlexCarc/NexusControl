@@ -73,53 +73,57 @@ export function DashboardProvider({
 
   }, []);
 
-  function createUser(
+  async function createUser(
     name: string,
     email: string,
   ) {
 
-    const newUser = {
-      id: Date.now(),
-      name,
-      email,
-    };
+    const response = await api.post("/users", {
+      name, email,
+    })
 
     setUsers((prevUsers) => [
-      newUser,
+      response.data,
       ...prevUsers,
     ]);
   }
 
-  function deleteUser(id: number) {
+  async function deleteUser(id: number) {
+      await api.delete(`/users/${id}`);
 
-    setUsers((prevUsers) =>
-      prevUsers.filter(
-        (user) => user.id !== id
+      setUsers((prevUsers) => 
+        prevUsers.filter(
+          (user) => user.id !== id
+        )
       )
-    );
   }
 
-  function updateUser(
-    id: number,
-    name: string,
-    email: string,
-  ) {
+  async function updateUser(
+  id: number,
+  name: string,
+  email: string,
+) {
 
-    setUsers((prevUsers) =>
-      prevUsers.map((user) => {
+  const response = await api.put(
+    `/users/${id}`,
+    {
+      id,
+      name,
+      email,
+    }
+  );
 
-        if (user.id === id) {
-          return {
-            ...user,
-            name,
-            email,
-          };
-        }
+  setUsers((prevUsers) =>
+    prevUsers.map((user) => {
 
-        return user;
-      })
-    );
-  }
+      if (user.id === id) {
+        return response.data;
+      }
+
+      return user;
+    })
+  );
+}
 
   return (
     <DashboardContext.Provider
