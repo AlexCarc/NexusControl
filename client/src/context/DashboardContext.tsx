@@ -7,6 +7,7 @@ import {
 } from "react";
 
 import { api } from "../services/api";
+import toast from "react-hot-toast";
 
 type User = {
   id: number
@@ -22,15 +23,15 @@ type DashboardContextType = {
   createUser: (
     name: string,
     email: string,
-  ) => void
+  ) => Promise<void>
 
-  deleteUser: (id: number) => void
+  deleteUser: (id: number) => Promise<void>
 
   updateUser: (
     id: number,
     name: string,
     email: string,
-  ) => void
+  ) => Promise<void>
 }
 
 const DashboardContext = createContext(
@@ -62,6 +63,8 @@ export function DashboardProvider({
 
         console.log(error);
 
+        toast.error("Erro ao carregar usuários");
+
       } finally {
 
         setLoading(false);
@@ -78,52 +81,93 @@ export function DashboardProvider({
     email: string,
   ) {
 
-    const response = await api.post("/users", {
-      name, email,
-    })
+    try {
 
-    setUsers((prevUsers) => [
-      response.data,
-      ...prevUsers,
-    ]);
+      const response = await api.post(
+        "/users",
+        {
+          name,
+          email,
+        }
+      );
+
+      setUsers((prevUsers) => [
+        response.data,
+        ...prevUsers,
+      ]);
+
+      toast.success("Usuário criado com sucesso!");
+
+    } catch (error) {
+
+      console.log(error);
+
+      toast.error("Erro ao criar usuário");
+
+    }
   }
 
   async function deleteUser(id: number) {
+
+    try {
+
       await api.delete(`/users/${id}`);
 
-      setUsers((prevUsers) => 
+      setUsers((prevUsers) =>
         prevUsers.filter(
           (user) => user.id !== id
         )
-      )
+      );
+
+      toast.success("Usuário removido!");
+
+    } catch (error) {
+
+      console.log(error);
+
+      toast.error("Erro ao remover usuário");
+
+    }
   }
 
   async function updateUser(
-  id: number,
-  name: string,
-  email: string,
-) {
+    id: number,
+    name: string,
+    email: string,
+  ) {
 
-  const response = await api.put(
-    `/users/${id}`,
-    {
-      id,
-      name,
-      email,
+    try {
+
+      const response = await api.put(
+        `/users/${id}`,
+        {
+          id,
+          name,
+          email,
+        }
+      );
+
+      setUsers((prevUsers) =>
+        prevUsers.map((user) => {
+
+          if (user.id === id) {
+            return response.data;
+          }
+
+          return user;
+        })
+      );
+
+      toast.success("Usuário atualizado!");
+
+    } catch (error) {
+
+      console.log(error);
+
+      toast.error("Erro ao atualizar usuário");
+
     }
-  );
-
-  setUsers((prevUsers) =>
-    prevUsers.map((user) => {
-
-      if (user.id === id) {
-        return response.data;
-      }
-
-      return user;
-    })
-  );
-}
+  }
 
   return (
     <DashboardContext.Provider

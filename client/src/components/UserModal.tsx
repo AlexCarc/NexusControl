@@ -2,8 +2,6 @@ import { useState } from "react";
 
 import { useDashboard } from "../context/DashboardContext";
 
-import toast from "react-hot-toast";
-
 type UserModalProps = {
   onClose: () => void
 }
@@ -17,15 +15,16 @@ export function UserModal({
 
   const { createUser } = useDashboard();
 
-  function handleCreateUser() {
+  async function handleCreateUser() {
 
     if (!name || !email) {
       return;
     }
 
-    createUser(name, email);
+    await createUser(name, email);
 
-    toast.success("Usuário criado com sucesso");
+    setName("");
+    setEmail("");
 
     onClose();
   }
