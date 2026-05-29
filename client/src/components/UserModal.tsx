@@ -13,6 +13,8 @@ export function UserModal({
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
 
+  const [loading, setLoading] = useState(false);
+
   const { createUser } = useDashboard();
 
   async function handleCreateUser() {
@@ -21,12 +23,26 @@ export function UserModal({
       return;
     }
 
-    await createUser(name, email);
+    try {
 
-    setName("");
-    setEmail("");
+      setLoading(true);
 
-    onClose();
+      await createUser(name, email);
+
+      setName("");
+      setEmail("");
+
+      onClose();
+
+    } catch (error) {
+
+      console.log(error);
+
+    } finally {
+
+      setLoading(false);
+
+    }
   }
 
   return (
@@ -69,9 +85,10 @@ export function UserModal({
 
           <button
             onClick={handleCreateUser}
-            className="w-full bg-cyan-500 hover:bg-cyan-600 transition rounded-lg py-3 font-bold"
+            disabled={loading}
+            className="w-full bg-cyan-500 hover:bg-cyan-600 transition rounded-lg py-3 font-bold disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            Criar Usuário
+            {loading ? "Criando..." : "Criar Usuário"}
           </button>
 
         </div>

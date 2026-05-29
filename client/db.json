@@ -1,9 +1,19 @@
 {
   "users": [
     {
+      "id": "1",
       "name": "Alex Carvalho",
-      "email": "alexcarvalhoacoficial00@gmail.com",
-      "id": "M-t7IQNUPs0"
+      "email": "alex@email.com"
+    },
+    {
+      "id": "2",
+      "name": "Maria Silva",
+      "email": "maria@email.com"
+    },
+    {
+      "name": "Calleri",
+      "email": "calleri@email.com",
+      "id": "jp_abI9wGh8"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"
