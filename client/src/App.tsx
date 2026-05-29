@@ -39,25 +39,6 @@ export default function App() {
 
               <Dashboard />
 
-              <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 mt-6">
-
-                <MetricCard
-                  title="Usuários Ativos"
-                  value={String(totalUsers)}
-                />
-
-                <MetricCard
-                  title="Vendas do Mês"
-                  value="R$ 48.200"
-                />
-
-                <MetricCard
-                  title="Taxa de Conversão"
-                  value="18%"
-                />
-
-              </div>
-
             </div>
           }
         />
