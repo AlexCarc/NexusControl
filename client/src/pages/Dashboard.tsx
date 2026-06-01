@@ -1,11 +1,17 @@
 import { MetricCard } from "../components/MetricCard";
 import { SalesChart } from "../components/SalesChart";
+import { AIInsight } from "../components/AIInsight";
 
 import { useDashboard } from "../context/DashboardContext";
 
 export function Dashboard() {
 
-  const { totalUsers } = useDashboard();
+  const {
+    totalUsers,
+    activeUsers,
+    growthRate,
+    retentionRate,
+  } = useDashboard();
 
   return (
     <div>
@@ -22,26 +28,33 @@ export function Dashboard() {
 
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
 
         <MetricCard
-          title="Usuários Ativos"
+          title="Total de Usuários"
           value={String(totalUsers)}
         />
 
         <MetricCard
-          title="Vendas do Mês"
-          value="R$ 48.200"
+          title="Usuários Ativos"
+          value={String(activeUsers)}
         />
 
         <MetricCard
-          title="Taxa de Conversão"
-          value="18%"
+          title="Crescimento"
+          value={`${growthRate}%`}
+        />
+
+        <MetricCard
+          title="Retenção"
+          value={`${retentionRate}%`}
         />
 
       </div>
 
       <SalesChart />
+
+      <AIInsight />
 
     </div>
   )

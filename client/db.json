@@ -11,9 +11,9 @@
       "email": "maria@email.com"
     },
     {
-      "name": "Calleri",
-      "email": "calleri@email.com",
-      "id": "jp_abI9wGh8"
+      "name": "Paola",
+      "email": "paola@email.com",
+      "id": "IdnKZh1-gx8"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"

@@ -4,18 +4,31 @@ export function AIInsight() {
 
   const { totalUsers } = useDashboard();
 
+  function generateInsight() {
+
+    if (totalUsers <= 5) {
+      return "O sistema identificou crescimento inicial da plataforma. Continue expandindo sua base de usuários.";
+    }
+
+    if (totalUsers <= 15) {
+      return "O crescimento mensal está consistente. A retenção de usuários está positiva.";
+    }
+
+    return "Excelente crescimento detectado. O sistema mostra forte expansão da plataforma.";
+  }
+
   return (
-    <div className="bg-slate-900 border border-cyan-500 rounded-2xl p-6 mt-8">
+    <div className="bg-slate-900 border border-cyan-500 rounded-2xl p-6 mt-6">
 
       <div className="flex items-center gap-4 mb-4">
 
-        <div className="w-10 h-10 rounded-full bg-cyan-500 flex items-center justify-center font-bold">
+        <div className="w-12 h-12 rounded-full bg-cyan-500 flex items-center justify-center text-white font-bold text-xl">
           AI
         </div>
 
         <div>
 
-          <h2 className="text-white font-bold text-xl">
+          <h2 className="text-2xl font-bold text-white">
             Insight Inteligente
           </h2>
 
@@ -27,18 +40,8 @@ export function AIInsight() {
 
       </div>
 
-      <p className="text-slate-300 leading-relaxed">
-
-        O sistema identificou
-        {" "}
-        <span className="text-cyan-400 font-bold">
-          {totalUsers} usuários
-        </span>
-        {" "}
-        ativos na plataforma.
-        O crescimento mensal está positivo
-        e a retenção continua aumentando.
-
+      <p className="text-slate-200 leading-relaxed text-lg">
+        {generateInsight()}
       </p>
 
     </div>
